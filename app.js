@@ -1,39 +1,27 @@
-var http = require("http")
-var x = 4
-console.log(x);
+var router = require("./router.js");
+//Problem: We need a simple way to look at a user's badge count and JavaScript point from a web browser
+//Solution: Use Node.js to perform the profile look ups and server our template via HTTP
 
-var request = http.get("http://teamtreehouse.com/robinmalhotra123",function(result)
-{
-    console.log(result.statusCode)
-    var body = ""
-    result.on('data',function(chunk)
-    {
-        body += chunk
-    })
-
-    result.on('end',function()
-    {
-        if (result.statusCode === 200)
-        {
-            try {
-                var profile = JSON.parse(body)
-                console.log(profile.points['JavaScript'])
-            } catch (e) {
-                console.log(e.message)
-            } finally {
-
-            }
-        }
-        else {
-            console.error(http.STATUS_CODES[result.statusCode]);
-        }
+//Create a web server
+var http = require('http');
+http.createServer(function (request, response) {
+  router.home(request, response);
+  router.user(request, response);
+}).listen(3000);
+console.log('Server running at http://<workspace-url>/');
 
 
-    })
+//Function that handles the reading of files and merge in value
+  // read from file and get a string
+    // merge values in to string
 
-})
 
 
-request.on('error',function(e)
-{
-})
+
+
+
+
+
+
+
+
